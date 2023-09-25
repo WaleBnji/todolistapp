@@ -1,0 +1,27 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+@layer components{
+    .wrapper{
+        padding: 1.5rem;
+    }
+
+    .fcc{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .fbc{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .fc{
+        display: flex;
+        align-items: center;
+    }
+}
