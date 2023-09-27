@@ -52,7 +52,7 @@ export default function App() {
   };
 
   const clearList = () => {
-    showAlert('Item removed', 'danger', true);
+    showAlert('Items removed', 'danger', true);
     setList([]);
   };
 
@@ -80,7 +80,7 @@ export default function App() {
         <h2 className='text-center font-bold text-4xl  absolute top-[10rem] left-11 bg-white p-3'>Grocery List</h2>
         <div className='py-3 px-3'>
 
-        <form action='' onSubmit={handleSubmit} className='mt-4'>
+        <form action='' onSubmit={handleSubmit} className='mt-8'>
           <div className=''>
             <input
               type='text'
@@ -89,8 +89,8 @@ export default function App() {
               value={name}
               onChange={(e) => setName(e.target.value)}
             />
-            <button className='bg-blue-200 px-3 rounded ' type='submit'>
-              {isEditing ? 'Edit' : 'Submit'}
+            <button className='bg-blue-200 px-3  ' type='submit'>
+              {isEditing ? 'Edit' : 'Add'}
             </button>
           </div>
         </form>
