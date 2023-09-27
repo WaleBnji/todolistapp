@@ -2,6 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
+.alert-success{
+    background-color: rgb(127, 239, 127);
+}
+
+.alert-danger{
+    background-color: rgb(232, 136, 136);
+}
+
 
 @layer components{
     .wrapper{

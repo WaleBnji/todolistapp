@@ -5,13 +5,13 @@ import { AiFillDelete } from 'react-icons/ai';
 
 const List = ({ items }) => {
   return (
-    <div>
+    <div className='mt-4'>
       {items.map((item) => {
         const { id, title } = item;
         return (
-          <article key={id}>
+          <article key={id} className='fbc mt-2'>
             <p>{title}</p>
-            <div>
+            <div className='fc'>
               <BiEdit />
               <AiFillDelete />
             </div>
