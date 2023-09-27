@@ -74,17 +74,17 @@ export default function App() {
 
   return (
     <div className='wrapper fcc mt-10'>
-      <div className='border h-[80vh] w-[90%] relative'>
+      <div className='border h-[80vh] w-[90%] relative md:w-[60%]'>
         <img src={Image} alt="" className='h-[350px] w-full object-cover z-[-20]'/>
         {alert.show && <Alert {...alert} removeAlert={showAlert} list={list} />}
-        <h2 className='text-center font-bold text-4xl  absolute top-[10rem] left-11 bg-white p-3'>Grocery List</h2>
+        <h2 className='text-center font-bold text-4xl  absolute top-[10rem] left-11 bg-white p-3 md:left-[10rem]'>Grocery List</h2>
         <div className='py-3 px-3'>
 
-        <form action='' onSubmit={handleSubmit} className='mt-8'>
+        <form action='' onSubmit={handleSubmit} className='mt-8 md:text-center'>
           <div className=''>
             <input
               type='text'
-              className='border px-2'
+              className='border px-2 md:w-[60%]'
               placeholder='e.g eggs'
               value={name}
               onChange={(e) => setName(e.target.value)}
@@ -95,7 +95,7 @@ export default function App() {
           </div>
         </form>
         {list.length > 0 && (
-          <div>
+          <div className='md:w-[90%] md:mx-auto'>
             <List items={list} removeItem={removeItem} editItem={editItem} />
             <button
               className='text-center text-red-600 tracking-wide w-full mt-4'
