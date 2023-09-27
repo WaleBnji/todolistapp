@@ -9,7 +9,7 @@ const List = ({ items, removeItem, editItem }) => {
       {items.map((item) => {
         const { id, title } = item;
         return (
-          <article key={id} className='fbc mt-2'>
+          <article key={id} className='fbc mt-3 border-t border-b'>
             <p>{title}</p>
             <div className='fc'>
               <BiEdit onClick={() => editItem(id)} />

@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import Alert from './components/Alert';
 import List from './components/List';
+import Image from './assets/grocery.jpg'
 
 const getLocalStorage = () => {
   const list = localStorage.getItem('list');
@@ -73,10 +74,13 @@ export default function App() {
 
   return (
     <div className='wrapper fcc mt-10'>
-      <div className='border h-[80vh] w-[90%] py-4 px-3'>
+      <div className='border h-[80vh] w-[90%] relative'>
+        <img src={Image} alt="" className='h-[350px] w-full object-cover z-[-20]'/>
         {alert.show && <Alert {...alert} removeAlert={showAlert} list={list} />}
-        <h2 className='text-center font-bold text-2xl m-3'>Grocery List</h2>
-        <form action='' onSubmit={handleSubmit}>
+        <h2 className='text-center font-bold text-4xl  absolute top-[10rem] left-11 bg-white p-3'>Grocery List</h2>
+        <div className='py-3 px-3'>
+
+        <form action='' onSubmit={handleSubmit} className='mt-4'>
           <div className=''>
             <input
               type='text'
@@ -102,6 +106,7 @@ export default function App() {
             </button>
           </div>
         )}
+        </div>
       </div>
     </div>
   );
