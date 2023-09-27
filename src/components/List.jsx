@@ -3,7 +3,7 @@
 import { BiEdit } from 'react-icons/bi';
 import { AiFillDelete } from 'react-icons/ai';
 
-const List = ({ items }) => {
+const List = ({ items, removeItem, editItem }) => {
   return (
     <div className='mt-4'>
       {items.map((item) => {
@@ -12,8 +12,8 @@ const List = ({ items }) => {
           <article key={id} className='fbc mt-2'>
             <p>{title}</p>
             <div className='fc'>
-              <BiEdit />
-              <AiFillDelete />
+              <BiEdit onClick={() => editItem(id)} />
+              <AiFillDelete onClick={() => removeItem(id)} />
             </div>
           </article>
         );

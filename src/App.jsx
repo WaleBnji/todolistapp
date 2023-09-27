@@ -1,62 +1,108 @@
-import { useState } from "react"
-import Alert from './components/Alert'
-import List from './components/List'
+import { useEffect, useState } from 'react';
+import Alert from './components/Alert';
+import List from './components/List';
 
-
-
+const getLocalStorage = () => {
+  const list = localStorage.getItem('list');
+  if (list) {
+    return JSON.parse(localStorage.getItem('list'));
+  } else {
+    return [];
+  }
+};
 
 export default function App() {
-  const [name,setName] = useState('')
-  const [isEditing, setIsEditing] = useState(false)
+  const [name, setName] = useState('');
+  const [isEditing, setIsEditing] = useState(false);
   const [editId, setEditId] = useState(null);
-  const [list, setList] = useState([])
-  const [alert, setAlert] = useState({text: '', type: '', show: false})
+  const [list, setList] = useState(getLocalStorage());
+  const [alert, setAlert] = useState({ text: '', type: '', show: false });
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    
-    if(!name){
+
+    if (!name) {
       //Display alert
-      showAlert('Enter a value', 'danger', true)
-     
-    }
-
-    else if(name && isEditing){
-      //Deal with edit
+      showAlert('Enter a value', 'danger', true);
+    } else if (name && isEditing) {
+      setList(
+        list.map((item) => {
+          if (item.id === editId) {
+            return { ...item, title: name };
+          }
+          return item;
+        })
+      );
+      setIsEditing(false);
+      setEditId(null);
+      setName('');
+      showAlert('Item edited', 'success', true);
     } else {
-      //Show alert
-      const newItem = {id: new Date().getTime().toString(), title: name}
-      setList([...list, newItem])
-      setName('')
-      console.log(list)
+      showAlert('Item added', 'success', true);
+      const newItem = { id: new Date().getTime().toString(), title: name };
+      setList([...list, newItem]);
+      setName('');
+      console.log(list);
     }
-  }
+  };
 
-  const showAlert = (text='', type='', show=false) => {
-    setAlert({text, type, show})
-  }
+  const showAlert = (text = '', type = '', show = false) => {
+    setAlert({ text, type, show });
+  };
+
+  const clearList = () => {
+    showAlert('Item removed', 'danger', true);
+    setList([]);
+  };
+
+  const removeItem = (id) => {
+    showAlert('Item removed', 'danger', true);
+    setList(list.filter((item) => item.id !== id));
+  };
+
+  const editItem = (id) => {
+    const specificItem = list.find((item) => item.id === id);
+    setIsEditing(true);
+    setEditId(id);
+    setName(specificItem.title);
+  };
+
+  useEffect(() => {
+    localStorage.setItem('list', JSON.stringify(list));
+  }, [list]);
+
   return (
-   <div className="wrapper fcc mt-10">
-    <div className="border h-[80vh] w-[90%] py-4 px-3">
-      
-    {alert.show && <Alert {...alert} removeAlert={showAlert}/>}
-    <h2 className="text-center font-bold text-2xl m-3">Grocery List</h2>
-    <form action="" onSubmit={handleSubmit}>
-      <div className="">
-        <input type="text" className="border px-2" placeholder="e.g eggs" value={name} 
-        onChange={(e) => setName(e.target.value) }
-        />
-        <button className="bg-blue-200 px-3 rounded " type="submit">{isEditing ? 'Edit' : 'Submit'}</button>
+    <div className='wrapper fcc mt-10'>
+      <div className='border h-[80vh] w-[90%] py-4 px-3'>
+        {alert.show && <Alert {...alert} removeAlert={showAlert} list={list} />}
+        <h2 className='text-center font-bold text-2xl m-3'>Grocery List</h2>
+        <form action='' onSubmit={handleSubmit}>
+          <div className=''>
+            <input
+              type='text'
+              className='border px-2'
+              placeholder='e.g eggs'
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
+            <button className='bg-blue-200 px-3 rounded ' type='submit'>
+              {isEditing ? 'Edit' : 'Submit'}
+            </button>
+          </div>
+        </form>
+        {list.length > 0 && (
+          <div>
+            <List items={list} removeItem={removeItem} editItem={editItem} />
+            <button
+              className='text-center text-red-600 tracking-wide w-full mt-4'
+              onClick={clearList}
+            >
+              {' '}
+              Clear items
+            </button>
+          </div>
+        )}
       </div>
-    </form>
-    {list.length > 0 && (
-  <div>
-    <List items={list}/>
-    <button className="text-center text-red-600 tracking-wide w-full mt-4"> Clear items</button>
-  </div>
-)  }
     </div>
-
-   </div>
-  )
+  );
 }
